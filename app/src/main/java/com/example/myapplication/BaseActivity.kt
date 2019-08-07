@@ -1,14 +1,21 @@
 package com.example.myapplication
 
 import android.app.ProgressDialog
+import android.content.Context
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity
+import android.view.inputmethod.InputMethodManager
+import java.util.*
 
 abstract class BaseActivity:AppCompatActivity(){
     val progressDiaLog by lazy {
         ProgressDialog(this)
     }
+    val inputMethodManager by lazy {
+        getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(getLayoutResId())
@@ -27,5 +34,8 @@ abstract class BaseActivity:AppCompatActivity(){
     }
     fun dissmissProgress(){
         progressDiaLog.dismiss()
+    }
+    fun hideSoftKeyBoard(){
+        inputMethodManager.hideSoftInputFromWindow(currentFocus.windowToken,0)
     }
 }
