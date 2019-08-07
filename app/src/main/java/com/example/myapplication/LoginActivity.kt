@@ -3,12 +3,33 @@ package com.example.myapplication
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.view.KeyEvent
+import android.widget.TextView
 import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
 import com.example.myapplication.contract.LoginContract
+import com.example.myapplication.preasenter.LoginPresenter
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity :BaseActivity(),LoginContract.View {
+
+    val  presenter = LoginPresenter(this)
+    override fun init() {
+        super.init()
+        login.setOnClickListener {
+            login()
+        }
+        password.setOnEditorActionListener { v, actionId, event ->
+            login()
+            true
+        }
+    }
+    fun login(){
+        val  userNameString = userName.text.toString().trim();
+        val  passWordString = password.text.toString().trim();
+        presenter.login(userNameString,passWordString)
+    }
+
     override fun onUserNameError() {
         userName.setError(getString(R.string.user_name_error))
     }
