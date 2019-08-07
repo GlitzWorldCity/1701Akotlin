@@ -1,13 +1,6 @@
-package com.example.myapplication
+package com.example.myapplication.activity
 
-import android.content.Context
-import android.support.v7.app.AppCompatActivity
-import android.os.Bundle
-import android.view.KeyEvent
-import android.view.LayoutInflater
-import android.widget.TextView
-import android.widget.Toast
-import android.widget.Toast.LENGTH_SHORT
+import com.example.myapplication.R
 import com.example.myapplication.contract.RegisterContract
 import com.example.myapplication.preasenter.RegisterPreasenter
 import kotlinx.android.synthetic.main.activity_register.*

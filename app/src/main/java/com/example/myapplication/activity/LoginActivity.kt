@@ -1,20 +1,16 @@
-package com.example.myapplication
+package com.example.myapplication.activity
 
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.support.v7.app.AppCompatActivity
-import android.os.Bundle
 import android.support.v4.app.ActivityCompat
-import android.view.KeyEvent
-import android.widget.TextView
 import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
+import com.example.myapplication.R
 import com.example.myapplication.contract.LoginContract
 import com.example.myapplication.preasenter.LoginPresenter
 import kotlinx.android.synthetic.main.activity_login.*
-import java.util.jar.Manifest
 
-class LoginActivity :BaseActivity(),LoginContract.View {
+class LoginActivity : BaseActivity(),LoginContract.View {
 
     val  presenter = LoginPresenter(this)
     override fun init() {
@@ -55,7 +51,7 @@ class LoginActivity :BaseActivity(),LoginContract.View {
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         if (grantResults[0]==PackageManager.PERMISSION_GRANTED){
             login()
-        }else Toast.makeText(this,R.string.permission_denied, LENGTH_SHORT).show()
+        }else Toast.makeText(this, R.string.permission_denied, LENGTH_SHORT).show()
     }
 
     override fun onUserNameError() {
@@ -85,7 +81,7 @@ class LoginActivity :BaseActivity(),LoginContract.View {
         //隐藏进度条
         dissmissProgress()
         //弹出toast
-        Toast.makeText(this,R.string.login_failed,LENGTH_SHORT).show()
+        Toast.makeText(this, R.string.login_failed,LENGTH_SHORT).show()
     }
 
     override fun getLayoutResId(): Int  = R.layout.activity_login
