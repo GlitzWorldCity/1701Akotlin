@@ -1,12 +1,10 @@
-package com.example.myapplication.activity
+package com.example.myapplication.ui.activity
 
 import android.app.ProgressDialog
 import android.content.Context
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity
 import android.view.inputmethod.InputMethodManager
-import java.util.*
 
 abstract class BaseActivity:AppCompatActivity(){
     val progressDiaLog by lazy {

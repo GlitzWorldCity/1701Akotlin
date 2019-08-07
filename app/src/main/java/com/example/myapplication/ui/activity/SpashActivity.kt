@@ -1,4 +1,4 @@
-package com.example.myapplication.activity
+package com.example.myapplication.ui.activity
 
 import android.content.Intent
 import android.os.Handler

@@ -1,4 +1,4 @@
-package com.example.myapplication.activity
+package com.example.myapplication.ui.activity
 
 import com.example.myapplication.R
 import com.example.myapplication.contract.RegisterContract
