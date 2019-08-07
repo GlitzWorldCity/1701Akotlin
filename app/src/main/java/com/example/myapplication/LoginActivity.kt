@@ -1,8 +1,10 @@
 package com.example.myapplication
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v4.app.ActivityCompat
 import android.view.KeyEvent
 import android.widget.TextView
 import android.widget.Toast
@@ -10,6 +12,7 @@ import android.widget.Toast.LENGTH_SHORT
 import com.example.myapplication.contract.LoginContract
 import com.example.myapplication.preasenter.LoginPresenter
 import kotlinx.android.synthetic.main.activity_login.*
+import java.util.jar.Manifest
 
 class LoginActivity :BaseActivity(),LoginContract.View {
 
@@ -25,10 +28,31 @@ class LoginActivity :BaseActivity(),LoginContract.View {
         }
     }
     fun login(){
+        //隐藏软键盘
         hideSoftKeyBoard()
-        val  userNameString = userName.text.toString().trim();
-        val  passWordString = password.text.toString().trim();
-        presenter.login(userNameString,passWordString)
+        if (hawriteExterNalStoragePermission()) {
+            val userNameString = userName.text.toString().trim();
+            val passWordString = password.text.toString().trim();
+            presenter.login(userNameString, passWordString)
+        }else applyWriteExteranISoragePermissino()
+    }
+
+    private fun applyWriteExteranISoragePermissino() {
+        val permission = arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        ActivityCompat.requestPermissions(this,permission,0)
+
+    }
+
+    //检查是否写磁盘权限
+    private fun hawriteExterNalStoragePermission(): Boolean {
+        val result = ActivityCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_APN_SETTINGS)
+        return result == PackageManager.PERMISSION_GRANTED
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        if (grantResults[0]==PackageManager.PERMISSION_GRANTED){
+            login()
+        }else Toast.makeText(this,R.string.permission_denied, LENGTH_SHORT).show()
     }
 
     override fun onUserNameError() {
