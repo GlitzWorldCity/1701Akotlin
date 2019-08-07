@@ -19,6 +19,10 @@ class LoginActivity :BaseActivity(),LoginContract.View {
     val  presenter = LoginPresenter(this)
     override fun init() {
         super.init()
+        newUser.setOnClickListener {
+            var intent = Intent(this@LoginActivity, RegisterActivity::class.java)
+            startActivity(intent)
+        }
         login.setOnClickListener {
             login()
         }
@@ -40,12 +44,11 @@ class LoginActivity :BaseActivity(),LoginContract.View {
     private fun applyWriteExteranISoragePermissino() {
         val permission = arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
         ActivityCompat.requestPermissions(this,permission,0)
-
     }
 
     //检查是否写磁盘权限
     private fun hawriteExterNalStoragePermission(): Boolean {
-        val result = ActivityCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_APN_SETTINGS)
+        val result = ActivityCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
         return result == PackageManager.PERMISSION_GRANTED
     }
 
