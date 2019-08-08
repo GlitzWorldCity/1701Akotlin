@@ -7,14 +7,14 @@ import com.example.myapplication.adapter.ContactListAdapter
 import com.example.myapplication.adapter.EMContactListenerAdapter
 import com.example.myapplication.contract.ContactContract
 import com.example.myapplication.preasenter.ContactPresenter
+import com.example.myapplication.ui.activity.AddFriendActivity
 import com.example.myapplication.widget.SlideBar
 import kotlinx.android.synthetic.main.fragment_contacts.*
 import kotlinx.android.synthetic.main.header.*
 import org.jetbrains.anko.toast
 import com.hyphenate.EMContactListener
 import com.hyphenate.chat.EMClient
-
-
+import org.jetbrains.anko.startActivity
 
 
 class ContactFragment :BaseFragment(),ContactContract.View{
@@ -28,7 +28,7 @@ class ContactFragment :BaseFragment(),ContactContract.View{
         super.init()
         headerTitle.text = getString(R.string.contact)
         add.visibility = View.VISIBLE
-
+        add.setOnClickListener { context?.startActivity<AddFriendActivity>()}
         swipeRefreshLayout.apply {
             setColorSchemeResources(R.color.qq_blue)
             isRefreshing = true
