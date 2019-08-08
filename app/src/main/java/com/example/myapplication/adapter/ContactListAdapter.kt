@@ -21,6 +21,4 @@ class ContactListAdapter(val context: Context) :RecyclerView.Adapter<RecyclerVie
     class ContactListItemViewHolder(itemView: View?): RecyclerView.ViewHolder(itemView!!){
 
     }
-
-
 }
