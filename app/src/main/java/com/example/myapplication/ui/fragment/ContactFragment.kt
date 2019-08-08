@@ -7,6 +7,7 @@ import com.example.myapplication.adapter.ContactListAdapter
 import com.example.myapplication.adapter.EMContactListenerAdapter
 import com.example.myapplication.contract.ContactContract
 import com.example.myapplication.preasenter.ContactPresenter
+import com.example.myapplication.widget.SlideBar
 import kotlinx.android.synthetic.main.fragment_contacts.*
 import kotlinx.android.synthetic.main.header.*
 import org.jetbrains.anko.toast
@@ -21,6 +22,8 @@ class ContactFragment :BaseFragment(),ContactContract.View{
     override fun getLayoutBaseId(): Int = R.layout.fragment_contacts
 
     val presenter = ContactPresenter(this)
+
+
     override fun init() {
         super.init()
         headerTitle.text = getString(R.string.contact)
@@ -41,10 +44,29 @@ class ContactFragment :BaseFragment(),ContactContract.View{
                 presenter.loadContacts()
             }
         })
+        slideBar.onSectionChangeListener = object :SlideBar.OnSectionChangeListener{
+            override fun onSectionChange(firstLetter: String) {
+                section.visibility = View.VISIBLE
+                section.text = firstLetter
+                recyclerView.smoothScrollToPosition(getPostion(firstLetter))
+            }
 
+            override fun onSlideFinish() {
+                section.visibility = View.GONE
+            }
+
+        }
 
         presenter.loadContacts()
     }
+
+    private fun getPostion(firstLetter: String): Int =
+        presenter.contactListItems.binarySearch {
+            contactListItem -> contactListItem.firstLetter.minus(firstLetter[0])
+        }
+
+
+
     override fun onLoadContactSuccess() {
         swipeRefreshLayout.isRefreshing = false
         recyclerView.adapter?.notifyDataSetChanged()
