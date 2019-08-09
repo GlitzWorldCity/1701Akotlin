@@ -6,7 +6,7 @@ import com.hyphenate.chat.EMMessage
 interface ChatContract {
     interface Presenter:BasePresenter{
         fun sendMessage(contact:String,message :String)
-        fun addMEssage(username: String, p0: MutableList<EMMessage>?)
+        abstract fun addMEssage(username: String, p0: MutableList<EMMessage>?)
     }
     interface View{
         fun onStratSendMessage()

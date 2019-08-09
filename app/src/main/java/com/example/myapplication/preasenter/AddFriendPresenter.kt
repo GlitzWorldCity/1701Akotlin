@@ -29,7 +29,7 @@ class AddFriendPresenter(val view: AddFriendContract.View) :AddFriendContract.Pr
                             var isAdded = false
                             for (contect in allCintacts){
                                 if (contect.name == it.username){
-                                    isAdded = true
+                                    isAdded =true
                                 }
                             }
                             val addFriendItem = AddFriendItem(it.username, it.createdAt,isAdded)

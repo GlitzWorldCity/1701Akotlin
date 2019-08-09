@@ -9,7 +9,6 @@ import android.widget.RelativeLayout
 import com.example.myapplication.R
 import com.hyphenate.chat.EMMessage
 import com.hyphenate.chat.EMTextMessageBody
-import kotlinx.android.synthetic.main.view_add_friend_item.view.timestamp
 import kotlinx.android.synthetic.main.view_send_message_item.view.*
 import java.util.*
 
