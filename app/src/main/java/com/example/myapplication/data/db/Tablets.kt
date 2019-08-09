@@ -8,4 +8,5 @@ object ContactTable{
     val NANME = "contact"
     val ID = "_id"
     val CONTACT = "name"
+
 }

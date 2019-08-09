@@ -14,6 +14,13 @@ class AddFriendListItemView (context: Context? ,attrs:AttributeSet? = null):Rela
     fun bindView(addFriendItem: AddFriendItem) {
         userName.text = addFriendItem.userName
         timestamp.text = addFriendItem.timestamp
+        if (addFriendItem.isAdded){
+            add.isEnabled = false
+            add.text = context.getString(R.string.already_added)
+        }else{
+            add.isEnabled = true
+            add.text = context.getString(R.string.add)
+        }
     }
 
     init {

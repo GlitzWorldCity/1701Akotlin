@@ -8,9 +8,12 @@ import com.hyphenate.chat.EMOptions
 import com.hyphenate.cloud.CloudFileManager.instance
 
 class IMAppLication :Application(){
-
+    companion object{
+        lateinit var instance :IMAppLication
+    }
     override fun onCreate() {
         super.onCreate()
+        instance = this
         //初始化
         EMClient.getInstance().init(this, EMOptions())
         //在做打包混淆时，关闭debug模式，避免消耗不必要的资源

@@ -42,6 +42,8 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
+    implementation 'org.jetbrains.anko:anko-commons:0.10.0'//Anko通用库
+    implementation 'org.jetbrains.anko:anko-sqlite:0.10.0' //Anko sqlite库
 
 
     api 'com.android.support:appcompat-v7:28.0.0-alpha1'
@@ -54,7 +56,6 @@ dependencies {
     configurations { all*.exclude group: 'com.android.support', module: 'support-v13' }
     implementation files('libs/hyphenatechat_3.6.0.jar')
     implementation 'cn.bmob.android:bmob-sdk:3.5.5'
-    implementation 'org.jetbrains.anko:anko-common:0.9'
 
     implementation "com.android.support:cardview-v7:28.0.0"
     implementation 'com.android.support:recyclerview-v7:28.0.0'
