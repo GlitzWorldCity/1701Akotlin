@@ -40,6 +40,8 @@ class ChatPreseter(val view: ChatContract.View) :ChatContract.Presenter{
     override fun loadMessages(username: String) {
         doAsync {
             val conversation = EMClient.getInstance().chatManager().getConversation(username)
+            conversation.markAllMessagesAsRead()
+
             messages.addAll(conversation.allMessages)
             uiThread { view.onMessageLoaded() }
         }
