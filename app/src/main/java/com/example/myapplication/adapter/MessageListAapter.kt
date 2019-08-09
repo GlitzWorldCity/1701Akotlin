@@ -35,7 +35,9 @@ class MessageListAapter(val context:Context,val message :List<EMMessage>) : Recy
         if (getItemViewType(p1)== ITEM_TYPE_SEND_MESSAGE){
             val sendMessageItemView = p0.itemView as SendMessageItemView
             sendMessageItemView.bindView(message[p1])
-
+        }else if(getItemViewType(p1)== ITEM_TYE_RECEIVE_MESSAGE){
+            val receiveMessageItemView = p0.itemView as ReceiveMessageItemView
+            receiveMessageItemView.bindView(message[p1])
         }
     }
 

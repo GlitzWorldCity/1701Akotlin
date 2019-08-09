@@ -7,9 +7,13 @@ import android.view.KeyEvent
 import android.view.View
 import android.widget.TextView
 import com.example.myapplication.R
+import com.example.myapplication.adapter.EMMesssageListenerAdapter
 import com.example.myapplication.adapter.MessageListAapter
 import com.example.myapplication.contract.ChatContract
 import com.example.myapplication.preasenter.ChatPreseter
+import com.hyphenate.EMMessageListener
+import com.hyphenate.chat.EMClient
+import com.hyphenate.chat.EMMessage
 import kotlinx.android.synthetic.main.activity_chat.*
 import kotlinx.android.synthetic.main.header.*
 import kotlinx.android.synthetic.main.view_send_message_item.*
@@ -19,12 +23,18 @@ class ChatActivity :BaseActivity(),ChatContract.View{
     override fun getLayoutResId(): Int = R.layout.activity_chat
     lateinit var username :String
     val presenter = ChatPreseter(this)
-
+    val messageListAapter = object : EMMesssageListenerAdapter() {
+        override fun onMessageReceived(p0: MutableList<EMMessage>?) {
+            presenter.addMEssage(username,p0)
+            runOnUiThread { recyclerView.adapter?.notifyDataSetChanged() }
+        }
+    }
     override fun init() {
         super.init()
         initHeader()
         initEditText()
         initRectclerView()
+        EMClient.getInstance().chatManager().addMessageListener(messageListAapter)
         send.setOnClickListener { send() }
     }
     private fun initRectclerView(){
@@ -82,5 +92,10 @@ class ChatActivity :BaseActivity(),ChatContract.View{
     override fun onSendMessageFailed() {
         toast(R.string.send_message_failed)
         recyclerView.adapter?.notifyDataSetChanged()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        EMClient.getInstance().chatManager().removeMessageListener(messageListAapter)
     }
 }
