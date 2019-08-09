@@ -41,6 +41,11 @@ class ContactFragment :BaseFragment(),ContactContract.View{
         }
         EMClient.getInstance().contactManager().setContactListener(object : EMContactListenerAdapter() {
             override fun onContactDeleted(p0: String?) {
+                //获取联系人数据
+                presenter.loadContacts()
+            }
+
+            override fun onContactAdded(p0: String?) {
                 presenter.loadContacts()
             }
         })
