@@ -26,7 +26,10 @@ class ChatActivity :BaseActivity(),ChatContract.View{
     val messageListAapter = object : EMMesssageListenerAdapter() {
         override fun onMessageReceived(p0: MutableList<EMMessage>?) {
             presenter.addMEssage(username,p0)
-            runOnUiThread { recyclerView.adapter?.notifyDataSetChanged() }
+            runOnUiThread {
+                recyclerView.adapter?.notifyDataSetChanged()
+                scrollToBootom()
+            }
         }
     }
     override fun init() {
@@ -87,6 +90,11 @@ class ChatActivity :BaseActivity(),ChatContract.View{
         recyclerView.adapter?.notifyDataSetChanged()
         toast(R.string.send_message_success)
         edit.text.clear()
+        scrollToBootom()
+    }
+    private fun scrollToBootom(){
+
+        recyclerView.scrollToPosition(presenter.messages.size-1)
     }
 
     override fun onSendMessageFailed() {
