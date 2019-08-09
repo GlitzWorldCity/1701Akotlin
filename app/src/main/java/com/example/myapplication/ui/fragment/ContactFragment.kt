@@ -23,33 +23,29 @@ class ContactFragment :BaseFragment(),ContactContract.View{
 
     val presenter = ContactPresenter(this)
 
+    val contractListener = object : EMContactListenerAdapter() {
+        override fun onContactDeleted(p0: String?) {
+            //获取联系人数据
+            presenter.loadContacts()
+        }
+
+        override fun onContactAdded(p0: String?) {
+            presenter.loadContacts()
+        }
+    }
 
     override fun init() {
         super.init()
-        headerTitle.text = getString(R.string.contact)
-        add.visibility = View.VISIBLE
-        add.setOnClickListener { context?.startActivity<AddFriendActivity>()}
-        swipeRefreshLayout.apply {
-            setColorSchemeResources(R.color.qq_blue)
-            isRefreshing = true
-            setOnRefreshListener { presenter.loadContacts() }
-        }
-        recyclerView.apply {
-            setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(context)
-            adapter =ContactListAdapter(context,presenter.contactListItems)
-        }
-        EMClient.getInstance().contactManager().setContactListener(object : EMContactListenerAdapter() {
-            override fun onContactDeleted(p0: String?) {
-                //获取联系人数据
-                presenter.loadContacts()
-            }
+        initHeader()
+        initSwipeRefreshLayout()
+        initRecyclerView()
+        EMClient.getInstance().contactManager().setContactListener(contractListener)
+        initSlideBar()
+        presenter.loadContacts()
+    }
 
-            override fun onContactAdded(p0: String?) {
-                presenter.loadContacts()
-            }
-        })
-        slideBar.onSectionChangeListener = object :SlideBar.OnSectionChangeListener{
+    private fun initSlideBar() {
+        slideBar.onSectionChangeListener = object : SlideBar.OnSectionChangeListener {
             override fun onSectionChange(firstLetter: String) {
                 section.visibility = View.VISIBLE
                 section.text = firstLetter
@@ -61,8 +57,28 @@ class ContactFragment :BaseFragment(),ContactContract.View{
             }
 
         }
+    }
 
-        presenter.loadContacts()
+    private fun initRecyclerView() {
+        recyclerView.apply {
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(context)
+            adapter = ContactListAdapter(context, presenter.contactListItems)
+        }
+    }
+
+    private fun initSwipeRefreshLayout() {
+        swipeRefreshLayout.apply {
+            setColorSchemeResources(R.color.qq_blue)
+            isRefreshing = true
+            setOnRefreshListener { presenter.loadContacts() }
+        }
+    }
+
+    private fun initHeader() {
+        headerTitle.text = getString(R.string.contact)
+        add.visibility = View.VISIBLE
+        add.setOnClickListener { context?.startActivity<AddFriendActivity>() }
     }
 
     private fun getPostion(firstLetter: String): Int =
@@ -82,5 +98,9 @@ class ContactFragment :BaseFragment(),ContactContract.View{
         context?.toast(R.string.load_contacts_failed)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        EMClient.getInstance().contactManager().removeContactListener(contractListener)
+    }
 
 }
