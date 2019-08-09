@@ -16,7 +16,6 @@ import com.hyphenate.chat.EMClient
 import com.hyphenate.chat.EMMessage
 import kotlinx.android.synthetic.main.activity_chat.*
 import kotlinx.android.synthetic.main.header.*
-import kotlinx.android.synthetic.main.view_send_message_item.*
 import org.jetbrains.anko.toast
 
 class ChatActivity :BaseActivity(),ChatContract.View{

@@ -9,8 +9,6 @@ import android.widget.RelativeLayout
 import com.example.myapplication.R
 import com.hyphenate.chat.EMMessage
 import com.hyphenate.chat.EMTextMessageBody
-import kotlinx.android.synthetic.main.activity_chat.view.*
-import kotlinx.android.synthetic.main.view_add_friend_item.view.*
 import kotlinx.android.synthetic.main.view_add_friend_item.view.timestamp
 import kotlinx.android.synthetic.main.view_send_message_item.view.*
 import java.util.*
@@ -20,8 +18,8 @@ class SendMessageItemView(context :Context?,attrs :AttributeSet?= null) :Relativ
     init {
         View.inflate(context, R.layout.view_send_message_item,this)
     }
-    fun bindView(emMessage: EMMessage) {
-        updateTimesamp(emMessage)
+    fun bindView(emMessage: EMMessage, showTimestamp: Boolean) {
+        updateTimesamp(emMessage,showTimestamp)
         updateMessage(emMessage)
         updeteProgress(emMessage)
     }
@@ -54,9 +52,10 @@ class SendMessageItemView(context :Context?,attrs :AttributeSet?= null) :Relativ
         }
     }
 
-    private fun updateTimesamp(emMessage: EMMessage) {
-
-        timestamp.text= DateUtils.getTimestampString(Date(emMessage.msgTime))
+    private fun updateTimesamp(emMessage: EMMessage, showTimestamp: Boolean) {
+        if (showTimestamp) {
+            timestamp.visibility = View.VISIBLE
+            timestamp.text = DateUtils.getTimestampString(Date(emMessage.msgTime))
+        }else timestamp.visibility = View.GONE
     }
-
 }

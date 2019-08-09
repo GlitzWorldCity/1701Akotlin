@@ -17,8 +17,8 @@ class ReceiveMessageItemView (context : Context?, attrs : AttributeSet?= null) :
     init {
         View.inflate(context, R.layout.view_receive_message_item,this)
     }
-    fun bindView(emMessage: EMMessage) {
-        updateTimesamp(emMessage)
+    fun bindView(emMessage: EMMessage, showTimestamp: Boolean) {
+        updateTimesamp(emMessage,showTimestamp)
         updateMessage(emMessage)
     }
     private fun updateMessage(emMessage: EMMessage) {
@@ -30,8 +30,10 @@ class ReceiveMessageItemView (context : Context?, attrs : AttributeSet?= null) :
         }
     }
 
-    private fun updateTimesamp(emMessage: EMMessage) {
-
-        timestamp.text= DateUtils.getTimestampString(Date(emMessage.msgTime))
+    private fun updateTimesamp(emMessage: EMMessage, showTimestamp: Boolean) {
+        if (showTimestamp) {
+            timestamp.visibility = View.VISIBLE
+            timestamp.text = DateUtils.getTimestampString(Date(emMessage.msgTime))
+        }else timestamp.visibility = View.GONE
     }
 }
