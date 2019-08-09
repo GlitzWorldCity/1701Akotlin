@@ -1,17 +1,15 @@
 package com.example.myapplication.ui.activity
 
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.KeyEvent
 import android.view.View
-import android.widget.TextView
 import com.example.myapplication.R
 import com.example.myapplication.adapter.EMMesssageListenerAdapter
 import com.example.myapplication.adapter.MessageListAapter
 import com.example.myapplication.contract.ChatContract
 import com.example.myapplication.preasenter.ChatPreseter
-import com.hyphenate.EMMessageListener
 import com.hyphenate.chat.EMClient
 import com.hyphenate.chat.EMMessage
 import kotlinx.android.synthetic.main.activity_chat.*
@@ -38,12 +36,24 @@ class ChatActivity :BaseActivity(),ChatContract.View{
         initRectclerView()
         EMClient.getInstance().chatManager().addMessageListener(messageListAapter)
         send.setOnClickListener { send() }
+        presenter.loadMessages(username)
     }
     private fun initRectclerView(){
         recyclerView.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
             adapter =MessageListAapter(context,presenter.messages)
+            addOnScrollListener(object :RecyclerView.OnScrollListener(){
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+
+                    if (newState ==RecyclerView.SCROLL_STATE_IDLE){
+                        val linearLayoutManager = layoutManager as LinearLayoutManager
+                        if(linearLayoutManager.findFirstVisibleItemPosition()==0){
+                            presenter.loadMoreMessages(username)
+                        }
+                    }
+                }
+            })
         }
     }
 
@@ -104,5 +114,15 @@ class ChatActivity :BaseActivity(),ChatContract.View{
     override fun onDestroy() {
         super.onDestroy()
         EMClient.getInstance().chatManager().removeMessageListener(messageListAapter)
+    }
+
+    override fun onMoreMessageLoaded(size: Int) {
+        recyclerView.adapter?.notifyDataSetChanged()
+        recyclerView.scrollToPosition(size)
+    }
+
+    override fun onMessageLoaded() {
+        recyclerView.adapter?.notifyDataSetChanged()
+        scrollToBootom()
     }
 }
