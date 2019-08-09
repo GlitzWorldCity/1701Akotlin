@@ -51,11 +51,9 @@ class ContactFragment :BaseFragment(),ContactContract.View{
                 section.text = firstLetter
                 recyclerView.smoothScrollToPosition(getPostion(firstLetter))
             }
-
             override fun onSlideFinish() {
                 section.visibility = View.GONE
             }
-
         }
     }
 

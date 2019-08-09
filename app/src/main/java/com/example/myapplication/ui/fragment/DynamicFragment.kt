@@ -9,6 +9,7 @@ import com.hyphenate.chat.EMClient
 import kotlinx.android.synthetic.main.fragment_dynamic.*
 import kotlinx.android.synthetic.main.header.*
 import org.jetbrains.anko.runOnUiThread
+import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 
 class DynamicFragment :BaseFragment(){
@@ -29,6 +30,7 @@ class DynamicFragment :BaseFragment(){
             override fun onSuccess() {
                 context?.runOnUiThread {
                     toast(R.string.logout_success)
+                    startActivity<LoginActivity>()
                     var intent = Intent(context, LoginActivity::class.java)
                     startActivity(intent)
                 }
