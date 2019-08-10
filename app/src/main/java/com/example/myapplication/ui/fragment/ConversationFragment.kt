@@ -33,7 +33,7 @@ class ConversationFragment :BaseFragment(){
             adapter = ConversationListAdapter(context,conversations)
         }
         EMClient.getInstance().chatManager().addMessageListener(messageListener)
-        loadConversations()
+//        loadConversations()
     }
 
     private fun loadConversations() {
